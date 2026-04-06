@@ -3,9 +3,27 @@ import mongoose, { Document } from "mongoose";
 interface IUser extends Document {
     name: string;
     email:string;
-    password:string;
+    password?:string;
     createdAt:Date;
     updatedAt:Date;
 }
 
-const userSchema = new mongoose.Schema<IUser>({},{});
+const userSchema = new mongoose.Schema<IUser>({
+name:{
+    type:String,
+    required:true,
+    unique:true
+},
+email:{
+    type:String,
+    required:true,
+    unique:true
+},
+password:{
+    type:String
+}
+},{timestamps:true});
+
+const User = mongoose.models.User || mongoose.model("User",userSchema);
+
+export default User
